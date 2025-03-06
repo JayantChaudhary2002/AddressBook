@@ -1,5 +1,6 @@
 package com.example.addressbook.service;
 
+import com.example.addressbook.dto.ContactDTO;
 import com.example.addressbook.model.Contact;
 import com.example.addressbook.repository.ContactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,8 @@ public class ContactService {
     @Autowired
     private ContactRepository contactRepository;
 
-    public Contact addContact(Contact contact) {
+    public Contact addContact(ContactDTO contactDTO) {
+        Contact contact = new Contact(contactDTO);
         return contactRepository.save(contact);
     }
 
@@ -25,13 +27,13 @@ public class ContactService {
         return contactRepository.findById(id);
     }
 
-    public Contact updateContact(Long id, Contact newContact) {
+    public Contact updateContact(Long id, ContactDTO contactDTO) {
         return contactRepository.findById(id)
                 .map(contact -> {
-                    contact.setName(newContact.getName());
-                    contact.setPhone(newContact.getPhone());
-                    contact.setEmail(newContact.getEmail());
-                    contact.setAddress(newContact.getAddress());
+                    contact.setName(contactDTO.getName());
+                    contact.setPhone(contactDTO.getPhone());
+                    contact.setEmail(contactDTO.getEmail());
+                    contact.setAddress(contactDTO.getAddress());
                     return contactRepository.save(contact);
                 }).orElse(null);
     }
