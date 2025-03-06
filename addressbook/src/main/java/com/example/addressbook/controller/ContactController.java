@@ -15,7 +15,7 @@ import java.util.Optional;
 public class ContactController {
 
     @Autowired
-    private ContactService contactService; // Dependency Injection of Service Layer
+    private ContactService contactService;
 
     // Create a new Contact
     @PostMapping
